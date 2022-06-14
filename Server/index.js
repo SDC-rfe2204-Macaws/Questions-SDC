@@ -44,10 +44,11 @@ app.get('/qa/questions', (req, res) => {
   }
 
   db.query(SQL_QUERY, [ product_id])
-
-  .then((data, product_id) => {
-    data.rows[0].really = 'yo';
-    return res.send(data.rows[0])
+  .then((data) => {
+     data.rows[0]['product_id'] = product_id;
+     const obj = data.rows[0];
+     console.log(obj);
+    return res.send(obj)
   })
   .catch(err => console.log(err))
 })

@@ -4,7 +4,7 @@ const {Pool} = require('pg')
 // create an instance to
 const instance = new Pool({
   user: process.env.USER,
-  password: process.env.PASSWORD,
+  password: 'newPassword',
   host: process.env.HOST,
   port: process.env.PORT,
   database: process.env.DATABASE,
