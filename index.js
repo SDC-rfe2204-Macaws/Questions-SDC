@@ -1,8 +1,12 @@
 const express = require('express')
-//const db = require('../Database/pgDatabase.js')
-
+//const db = require('./Database/ETL_postgres.js')
 const app = express();
 const PORT = 3000;
+
+//middleware
+app.use(express.json());
+app.use(express.urlencoded({extended: true}))
+
 
 const QuestionRoute = require('./Routes/Question.route.js');
 
@@ -15,7 +19,7 @@ app.use((req, res, next) => {
 });
 
 //Error handler
-app.use((err, req, res, next) => {
+/* app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.send({
     error: {
@@ -23,7 +27,7 @@ app.use((err, req, res, next) => {
       message: err.message
     }
   });
-})
+}) */
 
 app.listen(PORT, () => {
   console.log(`server running on localhost:${PORT}`);

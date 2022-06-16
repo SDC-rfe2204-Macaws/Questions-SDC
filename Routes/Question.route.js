@@ -1,22 +1,34 @@
 const express = require('express');
 const router = express.Router();
+const questionModel = require('../Model/Questions.model.js');
 
 router.get('/:product_id', (req, res, next) => {
-  next(new Error("cannot get a list of all questions"))
-  //res.send('getting a list of questions that are not reported')
-
+  const { product_id } = req.params;
+  console.log(product_id)
+  questionModel.get(product_id).then((data) => {
+    res.send(data);
+  });
 });
 
-router.post('/', (req, res) => {
-  res.send('added question to db')
+router.post('/', (req, res, next) => {
+  questionModel.post(req.body).then((data) => {
+      res.sendStatus(201)
+    })
+    .catch((err) => {
+      res.send(err);
+    })
 });
 
 router.put('/:question_id/helpful', (req, res) => {
-  res.send('marked question as helpful')
+  questionModel.putHelpful(req.params.question_id).then(() => {
+    res.sendStatus(204);
+  })
 });
 
 router.put('/:question_id/report', (req, res) => {
-  res.send('marked question as reported')
+  questionModel.putReported(req.params.question_id).then(() => {
+    res.sendStatus(204);
+  })
 });
 
 module.exports = router;
