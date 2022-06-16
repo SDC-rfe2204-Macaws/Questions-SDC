@@ -1,0 +1,13 @@
+### get product all questions to a product
+GET http://localhost:3000/qa/questions/product_id
+
+###
+POST http://localhost:3000/qa/questions/
+
+
+###
+PUT http://localhost:3000/qa/questions/question_id/helpful
+
+###
+PUT http://localhost:3000/qa/questions/question_id/report
+
