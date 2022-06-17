@@ -1,8 +1,10 @@
+const { pool } = require('../index.js')
 
-const get = function(question_id, page = 1, count = 5) {
+const get = function (question_id, page, count = 5) {
   let offSet = page ? (page * count) - count : 0;
+  page = page || 1;
   console.log(question_id, page, count);
-  pool.query(`SELECT array_to_json(
+  return pool.query(`SELECT array_to_json(
     array_agg(
       json_build_object(
         'answer_id', a.id,
@@ -27,40 +29,60 @@ const get = function(question_id, page = 1, count = 5) {
   FROM answers a
   WHERE a.question_id = ${question_id}
   AND a.answers_reported = 0`)
+    .then((data) => {
+      var answers = {
+        question: question_id,
+        page,
+        count
+      }
+
+      if (data.rows[0].array_to_json) {
+        var cap = data.rows[0].array_to_json.slice(offSet, offSet + count);
+        answers.results = cap;
+      } else {
+        answer.results = [];
+      }
+      return answers;
+    })
 };
 
-const post = function(body) {
+const post = function (body, question_id) {
   var date_written = new Date().getTime();
-  body.body = body.body.replace(/'/g,"''");
-  //pool.query(`SELECT max(id) FROM answers`);
-  pool.query(`INSERT INTO answers
-(id, question_id,
-body,
-date_written,
-answer_name,
-answerer_email,
-answers_reported,
-helpful
- )
-VALUES
-(${body.question_id},
-'${body.body}',
-${date_written},
-'${body.answerer_name}',
-'${body.answerer_email}',
-0,
-0
-) RETURNING id`)
+  body.body = body.body.replace(/'/g, "''");
+  var lastId = pool.query(`SELECT max(id) FROM answers`);
+  return lastId.then((lastId, date_written) => {
+    lastId = lastId.rows[0].max + 1
+  return pool.query(`INSERT INTO answers
+  (id,
+  question_id,
+  body,
+  date_written,
+  answer_name,
+  answerer_email,
+  answers_reported,
+  helpful
+   )
+  VALUES
+  (${lastId},
+   ${question_id},
+  '${body.body}',
+   '${date_written}',
+  '${body.answerer_name}',
+  '${body.answerer_email}',
+  0,
+  0
+  ) RETURNING id`)
+  })
 
 };
 
-const putHelpful = function(answer_id) {
-return pool.query(`UPDATE answers
+const putHelpful = function (answer_id) {
+  return pool.query(`UPDATE answers
  SET helpful = helpful + 1
  WHERE id = ${answer_id}`)
 };
 
-const putReported = function(answer_id) {
+const putReported = function (answer_id) {
   return pool.query(`
   UPDATE answers
   SET answers_reported = 1

@@ -1,4 +1,4 @@
-const {pool} = require('../index.js');
+const { pool } = require('../index.js');
 
 
 const get = function (product_id) {
@@ -54,7 +54,7 @@ AND q.reported = 0`, [product_id])
 const post = function (body) {
   var date_written = new Date().getTime();
   body.question_body = body.question_body.replace(/'/g, "''");
-  var lastId = pool.query(`select max(id) from questions`)
+  var lastId = pool.query(`select max(id) from questions`);
    return lastId.then((lastId) => {
    return pool.query(`
    INSERT INTO questions

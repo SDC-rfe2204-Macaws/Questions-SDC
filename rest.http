@@ -26,10 +26,10 @@ PUT http://localhost:3000/qa/questions/3518965/report
   #### Returns answers for a given question.
   ### This list does not include any reported answers.
 
-GET http://localhost:3000/qa/questions/3518965/answers?page=1&count=2
+GET http://localhost:3000/qa/questions/573742/answers?page=1&count=5
 
 ###
-POST  http://localhost:3000/qa/questions/3518965/answers
+POST  http://localhost:3000/qa/questions/573742/answers
 Content-Type: application/json
 
 {

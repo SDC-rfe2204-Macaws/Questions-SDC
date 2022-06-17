@@ -18,6 +18,7 @@ router.route('/questions/:question_id/answers')
   controllerAnswers.get(req, res);
 })
 .post((req, res) => {
+  console.log("in routes", req.query)
   controllerAnswers.post(req, res);
 })
 
