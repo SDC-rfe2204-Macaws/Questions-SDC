@@ -1,15 +1,5 @@
-require("dotenv").config();
-const { Pool } = require('pg');
+const {pool} = require('../index.js');
 
-// create an instance
-const pool = new Pool({
-  user: process.env.USER,
-  password: process.env.PASSWORD,
-  host: process.env.HOST,
-  port: process.env.PORT,
-  database: process.env.DATABASE,
-  max: 25,
-})
 
 const get = function (product_id) {
   return pool.query(
@@ -66,9 +56,15 @@ const post = function (body) {
   body.question_body = body.question_body.replace(/'/g, "''");
   var lastId = pool.query(`select max(id) from questions`)
    return lastId.then((lastId) => {
-   return pool.query(`INSERT INTO questions
-        (id, product_id, question_body, question_date, asker_name,
-        asker_email, reported, question_helpfulness )
+   return pool.query(`
+   INSERT INTO questions
+        (id, product_id,
+           question_body,
+            question_date,
+             asker_name,
+        asker_email,
+         reported,
+          question_helpfulness )
         VALUES
         (${lastId.rows[0].max + 1}, ${body.product_id}, '${body.question_body}', '${date_written}',
         '${body.asker_name}', '${body.asker_email}', 0, 0)`)

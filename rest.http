@@ -22,10 +22,29 @@ PUT http://localhost:3000/qa/questions/3518965/helpful
 PUT http://localhost:3000/qa/questions/3518965/report
 
 
+###---------------Answers------------------
+  #### Returns answers for a given question.
+  ### This list does not include any reported answers.
+
+GET http://localhost:3000/qa/questions/3518965/answers?page=1&count=2
+
+###
+POST  http://localhost:3000/qa/questions/3518965/answers
+Content-Type: application/json
+
+{
+ "body" : "what kinda api is this?",
+ "name": "this is a test body" ,
+ "email": "billy@gmail",
+ "product_id": "1216546523"
+}
+### PUT helpful
+PUT http://localhost:3000/qa/answers/:answer_id/helpful
+### PUT report
+PUT http://localhost:3000/qa/answers/:answer_id/report
 
 
-
-
+#----------------Testing------------------
 
 ### TEST Query String
 GET http://localhost:3000/test?id=45314
