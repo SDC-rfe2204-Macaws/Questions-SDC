@@ -3,7 +3,6 @@ const questionModel = require('../../Database/Models/questions');
 module.exports = {
   get: function (req, res) {
     const { product_id } = req.params;
-    console.log(product_id)
     questionModel.get(product_id).then((data) => {
       res.send(data);
     });

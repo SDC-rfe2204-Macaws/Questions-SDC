@@ -38,10 +38,11 @@ Content-Type: application/json
  "email": "billy@gmail",
  "product_id": "1216546523"
 }
+
 ### PUT helpful
-PUT http://localhost:3000/qa/answers/:answer_id/helpful
+PUT http://localhost:3000/qa/answers/5985707/helpful
 ### PUT report
-PUT http://localhost:3000/qa/answers/:answer_id/report
+PUT http://localhost:3000/qa/answers/5985707/report
 
 
 #----------------Testing------------------
