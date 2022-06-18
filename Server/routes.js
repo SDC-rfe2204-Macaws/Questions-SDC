@@ -10,7 +10,7 @@ router.post('/questions/', controllerQuestions.post);
 
 router.put('/questions/:question_id/helpful', controllerQuestions.putHelpful);
 
-router.put('/questions/:question_id/report', controllerQuestions.putReported);
+router.put('/questions/:question_id/report', controllerQuestions.putReport);
 
 // answers routes
 router.route('/questions/:question_id/answers')
@@ -18,16 +18,15 @@ router.route('/questions/:question_id/answers')
   controllerAnswers.get(req, res);
 })
 .post((req, res) => {
-  console.log("in routes", req.query)
   controllerAnswers.post(req, res);
 })
 
-router.put('/answers/:answer_id/helpful', () => {
-  console.log('hit helpful put!')
+router.put('/answers/:answer_id/helpful', (req, res) => {
+  controllerAnswers.putHelpful(req, res);
 })
 
-router.put('/answers/:answer_id/report', () => {
-  console.log('hit report put!')
+router.put('/answers/:answer_id/report', (req, res) => {
+  controllerAnswers.putReport(req, res);
 })
 
 

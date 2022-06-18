@@ -8,7 +8,8 @@ module.exports = {
     });
   },
   post: function (req, res) {
-    questionModel.post(req.body).then((data) => {
+    questionModel.post(req.body)
+    .then((data) => {
       res.sendStatus(201)
     })
       .catch((err) => {
@@ -16,13 +17,21 @@ module.exports = {
       })
   },
   putHelpful: function (req, res) {
-    questionModel.putHelpful(req.params.question_id).then(() => {
+    questionModel.putHelpful(req.params.question_id)
+    .then(() => {
       res.sendStatus(204);
     })
+    .catch((err) => {
+      res.send(err);
+    })
   },
-  putReported: function (req, res) {
-    questionModel.putReported(req.params.question_id).then(() => {
+  putReport: function (req, res) {
+    questionModel.putReport(req.params.question_id)
+    .then(() => {
       res.sendStatus(204);
+    })
+    .catch((err) => {
+      res.send(err);
     })
   }
 }

@@ -10,13 +10,30 @@ module.exports = {
     })
   },
   post: function (req, res) {
-    console.log(req.body, req.query)
-    answersModel.post(req.body, req.query.question_id);
+    answersModel.post(req.body, req.params.question_id)
+    .then(() => {
+      res.sendStatus(201)
+    })
+    .catch((err) => {
+      res.send(err)
+    })
   },
-  putHelpful: (req, res) => {
+  putHelpful: function (req, res) {
+    answersModel.putHelpful(req.params.answer_id).then(() => {
+      res.sendStatus(204)
+    }).catch((err) => {
+      res.send(err);
+    })
 
   },
-  putReported: (req, res) => {
+  putReport: function (req, res) {
+    answersModel.putReport(req.params.answer_id)
+    .then(() => {
+      res.sendStatus(204);
+    })
+    .catch((err) => {
+      res.send(err);
+    })
 
   }
 }

@@ -77,7 +77,7 @@ const putHelpful = function(question_id) {
   WHERE id = ${question_id}`)
 }
 
-const putReported = function(question_id) {
+const putReport = function(question_id) {
   return pool.query(`UPDATE questions SET reported = 1
   WHERE id = ${question_id}`)
 }
@@ -88,5 +88,5 @@ module.exports = {
   get: get,
   post: post,
   putHelpful: putHelpful,
-  putReported: putReported
+  putReport: putReport
 };

@@ -51,8 +51,8 @@ const post = function (body, question_id) {
   body.body = body.body.replace(/'/g, "''");
   var lastId = pool.query(`SELECT max(id) FROM answers`);
   return lastId.then((lastId, date_written) => {
-    lastId = lastId.rows[0].max + 1
-  return pool.query(`INSERT INTO answers
+    lastId = lastId.rows[0].max + 1;
+    return pool.query(`INSERT INTO answers
   (id,
   question_id,
   body,
@@ -82,9 +82,8 @@ const putHelpful = function (answer_id) {
  WHERE id = ${answer_id}`)
 };
 
-const putReported = function (answer_id) {
-  return pool.query(`
-  UPDATE answers
+const putReport = function (answer_id) {
+  return pool.query(`UPDATE answers
   SET answers_reported = 1
   WHERE id = ${answer_id}`)
 };
@@ -94,5 +93,5 @@ module.exports = {
   get: get,
   post: post,
   putHelpful: putHelpful,
-  putReported: putReported
+  putReport: putReport
 }
